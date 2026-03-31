@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Uni Projects | Студенческие проекты</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f4f7fc;
+    color: #1a2c3e;
+    line-height: 1.5;
+  }
+
+  /* Адаптивный контейнер */
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Header */
+  .site-header {
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(2px);
+    border-bottom: 1px solid #dce5ef;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .logo {
+    font-weight: 700;
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, #2c5f8a, #3b82b6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -0.3px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: #2c3e4e;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover {
+    color: #2c5f8a;
+  }
+
+  /* кнопки */
+  .btn-primary {
+    background: #2c5f8a;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(44,95,138,0.2);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary:hover {
+    background: #1f4a6e;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(44,95,138,0.25);
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 1px solid #b9cad9;
+    padding: 8px 20px;
+    border-radius: 40px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #2c5f8a;
+  }
+
+  .btn-outline:hover {
+    border-color: #2c5f8a;
+    background: #eaf3fc;
+  }
+
+  /* Hero секция */
+  .hero {
+    text-align: center;
+    padding: 70px 20px 60px;
+    background: linear-gradient(145deg, #ffffff 0%, #eef3fa 100%);
+    border-radius: 0 0 32px 32px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, #1f4a6e, #3b82b6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 16px;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+    color: #3a5a78;
+    max-width: 600px;
+    margin: 0 auto 32px;
+  }
+
+  /* грид карточек */
+  .grid-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px;
+    margin: 48px 0;
+  }
+
+  .feature-card {
+    background: white;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 35px rgba(0,0,0,0.1);
+  }
+
+  .feature-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.4s;
+  }
+
+  .feature-card:hover img {
+    transform: scale(1.02);
+  }
+
+  .card-content {
+    padding: 20px;
+  }
+
+  .card-content h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #1f4a6e;
+  }
+
+  /* бегущая лента отзывов */
+  .reviews-section {
+    background: #ffffff;
+    padding: 32px 0;
+    border-radius: 32px;
+    margin: 48px 0;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+    border: 1px solid #e2edf7;
+  }
+
+  .reviews-title {
+    text-align: center;
+    margin-bottom: 24px;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: #2c5f8a;
+  }
+
+  .marquee {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    width: 100%;
+    cursor: grab;
+  }
+
+  .marquee-inner {
+    display: inline-flex;
+    gap: 24px;
+    animation: scrollReviews 28s linear infinite;
+  }
+
+  .review-item {
+    display: inline-flex;
+    flex-direction: column;
+    background: #f8fafd;
+    backdrop-filter: blur(4px);
+    padding: 18px 24px;
+    border-radius: 40px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+    border: 1px solid #d9e4ef;
+    white-space: normal;
+    width: 260px;
+    gap: 8px;
+  }
+
+  .review-text {
+    font-weight: 500;
+    color: #1a2c3e;
+  }
+
+  .review-author {
+    font-size: 0.8rem;
+    color: #2c5f8a;
+    font-weight: 500;
+  }
+
+  @keyframes scrollReviews {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .marquee:hover .marquee-inner {
+    animation-play-state: paused;
+  }
+
+  /* DASHBOARD стили — расширенные интерактивом из fin */
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 28px;
+    margin: 32px 0;
+  }
+
+  .card-glass {
+    background: white;
+    border-radius: 28px;
+    padding: 28px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+    border: 1px solid #e2edf7;
+    transition: all 0.2s;
+  }
+
+  .progress-bar {
+    background: #e2e8f0;
+    border-radius: 40px;
+    height: 10px;
+    margin: 16px 0;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    width: 70%;
+    background: #2c5f8a;
+    height: 100%;
+    border-radius: 40px;
+    transition: width 0.3s;
+  }
+
+  .task-list {
+    list-style: none;
+    margin-top: 20px;
+  }
+
+  .task-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #eef3fc;
+  }
+
+  .task-check {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #2c5f8a;
+  }
+
+  .stats-badge {
+    display: inline-flex;
+    background: #eaf3fc;
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #2c5f8a;
+  }
+
+  .skill-tag {
+    background: #eef3fc;
+    padding: 6px 14px;
+    border-radius: 40px;
+    font-size: 0.8rem;
+    display: inline-block;
+    margin: 4px 6px 0 0;
+    color: #2c5f8a;
+  }
+
+  /* Новые интерактивные блоки из fin (без кислоты) */
+  .feedback-wheel-panel {
+    background: #ffffff;
+    border: 2px dashed #8baec9;
+    border-radius: 28px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .wheel-icon {
+    font-size: 2.8rem;
+    color: #3b82b6;
+    filter: drop-shadow(2px 2px 0 #cbdde9);
+    transition: 0.2s;
+    cursor: pointer;
+  }
+
+  .wheel-icon:hover {
+    transform: rotate(15deg) scale(1.05);
+    color: #1f4a6e;
+  }
+
+  .conflict-journal {
+    background: #fefaf5;
+    border: 1px solid #e2cbb0;
+    border-radius: 24px;
+    padding: 20px;
+    margin-top: 20px;
+  }
+
+  .conflict-entry {
+    border-left: 6px solid #2c5f8a;
+    padding: 8px 12px;
+    background: #f9fbfd;
+    margin: 12px 0;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    color: #2c3e4e;
+  }
+
+  .museum-tag {
+    background: #eef2f7;
+    border: 1px solid #bdd4e4;
+    padding: 6px 16px;
+    border-radius: 40px;
+    font-family: monospace;
+    font-weight: 500;
+    font-size: 0.8rem;
+    color: #2c5f8a;
+    display: inline-block;
+    margin: 5px 5px 0 0;
+  }
+
+  .efficiency-modal {
+    background: white;
+    border-radius: 28px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #cbdde9;
+  }
+
+  @media (max-width: 768px) {
+    .dashboard-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .header-inner {
+      flex-direction: column;
+      gap: 12px;
+    }
+    .hero {
+      padding: 48px 16px;
+    }
+    .container {
+      padding: 0 18px;
+    }
+    .card-glass {
+      padding: 20px;
+    }
+    .feedback-wheel-panel {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  footer {
+    background: #1a2c3e;
+    color: #aac3d4;
+    text-align: center;
+    padding: 32px 20px;
+    margin-top: 60px;
+    border-radius: 32px 32px 0 0;
+  }
+
+  .project-link {
+    margin-top: 18px;
+    display: inline-block;
+    font-weight: 600;
+    color: #2c5f8a;
+    text-decoration: none;
+  }
+  textarea {
+    width: 100%;
+    background: #f9fbfd;
+    border: 1px solid #cbdde9;
+    border-radius: 20px;
+    padding: 12px;
+    font-family: inherit;
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo"><i class="fas fa-graduation-cap" style="color:#2c5f8a; margin-right: 6px;"></i> Uni Projects</div>
+    <div class="nav-links">
+      <a href="#" id="navHome">Главная</a>
+      <a href="#" id="navDashboard">Личный кабинет</a>
+      <a href="#" id="navProject">Мой проект</a>
+    </div>
+  </div>
+</header>
+
+<main id="app">
+  <!-- Главная страница -->
+  <div id="homeView">
+    <section class="hero">
+      <h1>Создавай студенческие проекты</h1>
+      <p>Развивай идеи, портфолио и находи единомышленников</p>
+      <button class="btn-primary" id="startBtn"><i class="fas fa-rocket"></i> Начать проект</button>
+    </section>
+    <div class="container">
+      <div class="grid-cards">
+        <div class="feature-card">
+          <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&auto=format" alt="Наставники">
+          <div class="card-content">
+            <h3>👥 Наставники</h3>
+            <p>Опытные менторы из индустрии помогут твоему проекту взлететь.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=500&auto=format" alt="Портфолио">
+          <div class="card-content">
+            <h3>📁 Портфолио</h3>
+            <p>Кейсы, достижения и реализованные проекты — твой актив.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&auto=format" alt="Анализ">
+          <div class="card-content">
+            <h3>📊 Анализ прогресса</h3>
+            <p>Отслеживай метрики и улучшай эффективность команды.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Лента отзывов -->
+      <div class="reviews-section">
+        <div class="reviews-title"><i class="fas fa-star" style="color:#eab308;"></i> Что говорят студенты</div>
+        <div class="marquee" id="marqueeReviews">
+          <div class="marquee-inner" id="reviewsTrack"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Личный кабинет (расширенный функционал + интерактив из fin) -->
+  <div id="dashboardView" style="display: none;">
+    <div class="container">
+      <div style="margin: 32px 0 20px;">
+        <h1 style="font-size: 2rem;"><i class="fas fa-user-astronaut"></i> Личный кабинет</h1>
+        <p>Управляй проектами, задачами и командной динамикой</p>
+      </div>
+      <div class="dashboard-grid">
+        <!-- левая колонка: проект и прогресс -->
+        <div class="card-glass">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3><i class="fas fa-code-branch"></i> Текущий проект</h3>
+            <span class="stats-badge" id="projectStatusBadge">В работе</span>
+          </div>
+          <h2 style="margin: 12px 0 4px;">EcoNexus — умный эко-трекер</h2>
+          <p style="color: #3a5a78;">Разработка платформы для мониторинга углеродного следа студентов.</p>
+          <div class="progress-bar"><div class="progress-fill" id="projectProgressFill" style="width: 70%;"></div></div>
+          <div style="display: flex; justify-content: space-between;">
+            <span>Общий прогресс</span>
+            <strong id="progressPercent">70%</strong>
+          </div>
+          <a href="#" id="goToProjectLink" class="project-link"><i class="fas fa-arrow-right"></i> Перейти к деталям проекта</a>
+          
+          <!-- Виджет эффективности (из fin) -->
+          <button class="btn-outline" style="margin-top: 20px; width:100%" id="showEfficiencyBtn"><i class="fas fa-chart-simple"></i> Показать эффективность</button>
+          <div id="efficiencyWidget" style="display:none; margin-top: 16px;" class="efficiency-modal">
+            <p><strong>🔹 ВИДЖЕТ ЭФФЕКТИВНОСТИ</strong></p>
+            <p>— Личный прогресс: 85%<br>— Вовлеченность: 68%<br>— Дедлайны: Прототипирование (3 дня)<br>— Конфликты: 1 разрешённый</p>
+          </div>
+        </div>
+
+        <!-- правая колонка: задачи + статистика -->
+        <div class="card-glass">
+          <h3><i class="fas fa-tasks"></i> Активные задачи</h3>
+          <ul class="task-list" id="taskListContainer"></ul>
+          <div style="margin-top: 20px;">
+            <button id="addTaskBtn" class="btn-outline" style="width:100%"><i class="fas fa-plus"></i> Добавить задачу</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Блок: Колесо обратной связи + Журнал конфликтов (интеграция из fin) -->
+      <div class="dashboard-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card-glass">
+          <h3><i class="fas fa-sync-alt"></i> Колесо обратной связи</h3>
+          <div class="feedback-wheel-panel" id="wheelPanel">
+            <div class="wheel-icon" id="wheelClick"><i class="fas fa-hand-sparkles"></i></div>
+            <div style="flex:1">
+              <p style="margin-bottom: 8px;">Анонимная фиксация проблем / идей. Нажми на колесо или кнопку.</p>
+              <div id="feedbackExpand" style="display: none; margin-top:10px;">
+                <textarea id="feedbackText" rows="2" placeholder="опишите проблему или предложение..." style="width:100%; border-radius: 16px;"></textarea>
+                <button class="btn-primary" style="margin-top: 8px; padding:8px 16px;" id="sendFeedbackBtn">Отправить</button>
+              </div>
+              <button class="btn-outline" style="margin-top:8px;" id="showFeedbackBtn">✎ написать отзыв</button>
+            </div>
+          </div>
+          <div id="feedbackMessage" style="margin-top: 8px; font-size:0.85rem; color:#2c5f8a;"></div>
+        </div>
+        
+        <div class="card-glass">
+          <h3><i class="fas fa-clipboard-list"></i> Журнал конфликтов и триггеры</h3>
+          <div class="conflict-journal" style="margin-top: 0;">
+            <div class="conflict-entry">✅ 22.03: конфликт ролей разрешён через колесо</div>
+            <div class="conflict-entry" style="border-left-color:#b68b40;">⚠️ 18.03: повторный конфликт — передан ментору</div>
+            <div style="margin-top: 16px;">
+              <span class="museum-tag"><i class="fas fa-chart-line"></i> лимит: 1 конфликт</span>
+              <span class="museum-tag"><i class="fas fa-users"></i> опрос команды</span>
+            </div>
+            <div style="background:#fcf4e8; margin-top:15px; padding:10px; border-radius: 20px; border-left: 4px solid #e2a526;">
+              🚨 ТРИГГЕР: 2+ конфликта без прогресса → вмешательство тьютора
+            </div>
+            <button id="resolveConflictBtn" class="btn-outline" style="margin-top: 16px; width:100%"><i class="fas fa-handshake"></i> Отметить разрешение конфликта</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- дополнительная карточка: статистика и навыки -->
+      <div class="dashboard-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="card-glass">
+          <h3><i class="fas fa-chart-line"></i> Статистика участия</h3>
+          <p><strong>⭐ 4.8</strong> рейтинг наставников</p>
+          <p><i class="fas fa-users"></i> 24 участника в сети</p>
+          <p><i class="fas fa-calendar-week"></i> Активность: 12 дней подряд</p>
+          <div class="stat-item" style="margin-top:12px;">
+            <span>Конфликтоустойчивость</span>
+            <div class="progress-bar"><div class="progress-fill" style="width:95%"></div></div>
+          </div>
+        </div>
+        <div class="card-glass">
+          <h3><i class="fas fa-brain"></i> Навыки для прокачки</h3>
+          <div>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">UI/UX</span>
+            <span class="skill-tag">Data Analysis</span>
+            <span class="skill-tag">Git</span>
+          </div>
+          <button class="btn-outline" style="margin-top: 20px;" id="recommendSkillBtn"><i class="fas fa-lightbulb"></i> Рекомендация курса</button>
+          <p id="skillMessage" style="margin-top: 12px; font-size:0.85rem; color:#2c5f8a;"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Страница проекта -->
+  <div id="projectView" style="display: none;">
+    <div class="container">
+      <div style="margin: 40px 0 20px;">
+        <h1><i class="fas fa-diagram-project"></i> EcoNexus — проект</h1>
+      </div>
+      <div class="card-glass">
+        <p><strong>Описание:</strong> Создание веб-приложения для отслеживания экологических привычек студентов ВУЗа. Интеграция с API и дашборд статистики.</p>
+        <p><i class="fas fa-user-friends"></i> <strong>Участники:</strong> 5 человек (Анна, Кирилл, Мария, Денис, Вы)</p>
+        <p><i class="fas fa-chart-simple"></i> <strong>Статус:</strong> Активная разработка, спринт 3</p>
+        <p><i class="fas fa-flag-checkered"></i> Дедлайн: 15 июня 2025</p>
+        <div style="margin-top: 24px;">
+          <button class="btn-primary" id="backToDashboardBtn"><i class="fas fa-arrow-left"></i> Вернуться в личный кабинет</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>© 2025 Uni Projects — платформа студенческих инициатив</p>
+  <p style="margin-top: 8px; font-size: 0.8rem;">Развивай идеи, создавай будущее</p>
+</footer>
+
+<script>
+  // ------ Управление вкладками ------
+  const homeView = document.getElementById('homeView');
+  const dashboardView = document.getElementById('dashboardView');
+  const projectView = document.getElementById('projectView');
+  const navHome = document.getElementById('navHome');
+  const navDashboard = document.getElementById('navDashboard');
+  const navProject = document.getElementById('navProject');
+  const startBtn = document.getElementById('startBtn');
+  const goToProjectLink = document.getElementById('goToProjectLink');
+  const backToDashboardBtn = document.getElementById('backToDashboardBtn');
+
+  function showView(viewName) {
+    homeView.style.display = 'none';
+    dashboardView.style.display = 'none';
+    projectView.style.display = 'none';
+    if(viewName === 'home') homeView.style.display = 'block';
+    if(viewName === 'dashboard') { dashboardView.style.display = 'block'; renderTasksAndProgress(); }
+    if(viewName === 'project') projectView.style.display = 'block';
+  }
+
+  navHome.addEventListener('click', (e) => { e.preventDefault(); showView('home'); });
+  navDashboard.addEventListener('click', (e) => { e.preventDefault(); showView('dashboard'); });
+  navProject.addEventListener('click', (e) => { e.preventDefault(); showView('project'); });
+  if(startBtn) startBtn.addEventListener('click', () => { showView('dashboard'); });
+  if(goToProjectLink) goToProjectLink.addEventListener('click', (e) => { e.preventDefault(); showView('project'); });
+  if(backToDashboardBtn) backToDashboardBtn.addEventListener('click', () => { showView('dashboard'); });
+
+  // ---------- Лента отзывов ----------
+  const reviewsData = [
+    { text: "🚀 Платформа помогла найти грант на 500k!", author: "Алина К." },
+    { text: "🤝 Нашёл тиммейтов для стартапа за 2 дня", author: "Дмитрий В." },
+    { text: "📈 Портфолио привлекло стажировку в IT-гигант", author: "София М." },
+    { text: "🔥 Наставники реально знают своё дело", author: "Илья П." },
+    { text: "🏆 Лучший сервис для студенческих проектов", author: "Екатерина С." },
+    { text: "💡 Удобный трекер задач и прогресса", author: "Максим О." }
+  ];
+  const track = document.getElementById('reviewsTrack');
+  function buildMarquee() {
+    if(!track) return;
+    let content = '';
+    for(let i=0; i<2; i++) {
+      reviewsData.forEach(r => {
+        content += `<div class="review-item"><div class="review-text">“${r.text}”</div><div class="review-author">— ${r.author}</div></div>`;
+      });
+    }
+    track.innerHTML = content;
+  }
+  buildMarquee();
+
+  // ---------- Задачи и прогресс ----------
+  let tasks = [
+    { id: 1, title: "Разработать дизайн дашборда", completed: true },
+    { id: 2, title: "Настроить Firebase + авторизация", completed: false },
+    { id: 3, title: "Создать прототип мобильной версии", completed: false },
+    { id: 4, title: "Интеграция графиков Chart.js", completed: false }
+  ];
+
+  function updateProjectProgress() {
+    const total = tasks.length;
+    const completedCount = tasks.filter(t => t.completed).length;
+    const percent = total === 0 ? 0 : Math.floor((completedCount / total) * 100);
+    const progressFill = document.getElementById('projectProgressFill');
+    const percentSpan = document.getElementById('progressPercent');
+    if(progressFill) progressFill.style.width = `${percent}%`;
+    if(percentSpan) percentSpan.innerText = `${percent}%`;
+    const statusBadge = document.getElementById('projectStatusBadge');
+    if(statusBadge) {
+      if(percent === 100) statusBadge.innerText = '✅ Завершён';
+      else if(percent >= 40) statusBadge.innerText = '🚀 Активный';
+      else statusBadge.innerText = '📌 Старт';
+    }
+    localStorage.setItem('uni_tasks', JSON.stringify(tasks));
+  }
+
+  function renderTasksAndProgress() {
+    const taskContainer = document.getElementById('taskListContainer');
+    if(!taskContainer) return;
+    taskContainer.innerHTML = '';
+    tasks.forEach(task => {
+      const li = document.createElement('li');
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.className = 'task-check';
+      checkbox.checked = task.completed;
+      checkbox.addEventListener('change', (e) => {
+        task.completed = e.target.checked;
+        updateProjectProgress();
+        renderTasksAndProgress();
+      });
+      const label = document.createElement('span');
+      label.innerText = task.title;
+      label.style.flex = '1';
+      if(task.completed) label.style.textDecoration = 'line-through';
+      label.style.color = task.completed ? '#94a3b8' : '#1a2c3e';
+      const delBtn = document.createElement('button');
+      delBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+      delBtn.style.background = 'none';
+      delBtn.style.border = 'none';
+      delBtn.style.cursor = 'pointer';
+      delBtn.style.color = '#b9cad9';
+      delBtn.addEventListener('click', () => {
+        tasks = tasks.filter(t => t.id !== task.id);
+        updateProjectProgress();
+        renderTasksAndProgress();
+      });
+      li.appendChild(checkbox);
+      li.appendChild(label);
+      li.appendChild(delBtn);
+      taskContainer.appendChild(li);
+    });
+    updateProjectProgress();
+  }
+
+  const addTaskBtn = document.getElementById('addTaskBtn');
+  if(addTaskBtn) {
+    addTaskBtn.addEventListener('click', () => {
+      const newTitle = prompt('Введите название задачи:');
+      if(newTitle && newTitle.trim() !== '') {
+        tasks.push({ id: Date.now(), title: newTitle.trim(), completed: false });
+        updateProjectProgress();
+        renderTasksAndProgress();
+      }
+    });
+  }
+
+  // Виджет эффективности
+  const effBtn = document.getElementById('showEfficiencyBtn');
+  const effWidget = document.getElementById('efficiencyWidget');
+  if(effBtn) effBtn.addEventListener('click', () => {
+    effWidget.style.display = effWidget.style.display === 'none' ? 'block' : 'none';
+  });
+
+  // Колесо обратной связи (интерактив)
+  const wheelIcon = document.getElementById('wheelClick');
+  const feedbackDiv = document.getElementById('feedbackExpand');
+  const showFeedbackBtn = document.getElementById('showFeedbackBtn');
+  const sendFeedbackBtn = document.getElementById('sendFeedbackBtn');
+  const feedbackMessageSpan = document.getElementById('feedbackMessage');
+  
+  function toggleFeedback() {
+    if(feedbackDiv) feedbackDiv.style.display = feedbackDiv.style.display === 'none' ? 'block' : 'none';
+  }
+  if(wheelIcon) wheelIcon.addEventListener('click', toggleFeedback);
+  if(showFeedbackBtn) showFeedbackBtn.addEventListener('click', toggleFeedback);
+  if(sendFeedbackBtn) {
+    sendFeedbackBtn.addEventListener('click', () => {
+      const textarea = document.getElementById('feedbackText');
+      const msg = textarea?.value.trim();
+      if(msg) {
+        if(feedbackMessageSpan) feedbackMessageSpan.innerHTML = '✅ Спасибо! Обратная связь отправлена анонимно.';
+        if(textarea) textarea.value = '';
+        setTimeout(() => { if(feedbackMessageSpan) feedbackMessageSpan.innerHTML = ''; }, 2500);
+        toggleFeedback();
+      } else {
+        alert('Напишите текст отзыва');
+      }
+    });
+  }
+
+  // Разрешение конфликта
+  const resolveBtn = document.getElementById('resolveConflictBtn');
+  if(resolveBtn) {
+    resolveBtn.addEventListener('click', () => {
+      const journalDiv = document.querySelector('.conflict-journal');
+      const newEntry = document.createElement('div');
+      newEntry.className = 'conflict-entry';
+      newEntry.innerHTML = `✅ ${new Date().toLocaleDateString()}: конфликт урегулирован через платформу`;
+      journalDiv?.insertBefore(newEntry, journalDiv.firstChild);
+      alert('Конфликт отмечен как разрешённый. Команда может продолжить работу.');
+    });
+  }
+
+  // Рекомендация курса
+  const recommendBtn = document.getElementById('recommendSkillBtn');
+  const skillMsg = document.getElementById('skillMessage');
+  if(recommendBtn) {
+    recommendBtn.addEventListener('click', () => {
+      const recs = ['Курс "Python для анализа данных"', 'UI/UX Advanced от MSU', 'Git & GitHub для команд'];
+      const rand = recs[Math.floor(Math.random() * recs.length)];
+      if(skillMsg) skillMsg.innerHTML = `🎓 Рекомендуем: ${rand}. Запишись на бесплатный вебинар!`;
+    });
+  }
+
+  function loadTasksFromStorage() {
+    const stored = localStorage.getItem('uni_tasks');
+    if(stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if(Array.isArray(parsed) && parsed.length) tasks = parsed;
+      } catch(e) {}
+    }
+    updateProjectProgress();
+  }
+  loadTasksFromStorage();
+  renderTasksAndProgress();
+  showView('home');
+</script>
+</body>
+</html>
